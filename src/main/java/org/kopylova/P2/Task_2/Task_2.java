@@ -77,8 +77,7 @@ public class Task_2 {
     private static void copyUsingFilesClass(String source, String destination) throws IOException {
         Path sourcePath = Path.of(source);
         Path destinationPath = Path.of(destination);
-        Files.copy(sourcePath, destinationPath,
-                StandardCopyOption.REPLACE_EXISTING);
+        Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
     }
     private static void printTimeAndMemoryUsage(String method, long startTime, long endTime)
     {

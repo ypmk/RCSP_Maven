@@ -11,23 +11,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
-public class Task_4 {
+public class h {
     private static Map<Path, List<String>> fileContentsMap = new HashMap<>();
     private static Map<Path, String> fileHashes = new HashMap<>();
-    public static void main(String[] args) throws IOException, InterruptedException {
-        Path d = Paths.get("./Zad4_Base");
-        // Проверяем, существует ли каталог
-        if (!Files.exists(d)) {
-            try {
-                // Создаем каталог, если его не существует
-                Files.createDirectory(d);
-                System.out.println("Каталог создан: " + d.toAbsolutePath());
-            } catch (IOException e) {
-                System.err.println("Ошибка при создании каталога: " + e.getMessage());
-            }
-        } else {
-            System.out.println("Каталог уже существует: " + d.toAbsolutePath());
-        }
+    public static void main(String[] args) throws IOException,
+            InterruptedException {
         Path directory = Paths.get("./Zad4_Base");
         WatchService watchService = FileSystems.getDefault().newWatchService();
         directory.register(watchService, StandardWatchEventKinds.ENTRY_CREATE,
@@ -40,7 +28,8 @@ public class Task_4 {
                 if (kind == StandardWatchEventKinds.ENTRY_CREATE) {
                     Path filePath = (Path) event.context();
                     System.out.println("Создан новый файл: " + filePath);
-                    fileContentsMap.put(filePath, readLinesFromFile(directory.resolve(filePath)));
+                    fileContentsMap.put(filePath,
+                            readLinesFromFile(directory.resolve(filePath)));
                     calculateFileHash(directory.resolve(filePath));
                 } else if (kind == StandardWatchEventKinds.ENTRY_MODIFY) {
                     Path filePath = (Path) event.context();
@@ -81,11 +70,13 @@ public class Task_4 {
                     .filter(line -> !newFileContents.contains(line))
                     .toList();
             if (!addedLines.isEmpty()) {
-                System.out.println("Добавленные строки в файле " + filePath + ":");
+                System.out.println("Добавленные строки в файле " + filePath +
+                        ":");
                 addedLines.forEach(line -> System.out.println("+ " + line));
             }
             if (!deletedLines.isEmpty()) {
-                System.out.println("Удаленные строки из файла " + filePath + ":");
+                System.out.println("Удаленные строки из файла " + filePath +
+                        ":");
                 deletedLines.forEach(line -> System.out.println("- " + line));
             }
         }
